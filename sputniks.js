@@ -681,17 +681,59 @@ for (let i = 0; i < sputniks.length; i++) {
 }
 
 let countries = []
+let scintificCount = 0
 for (let i = 0; i < sputniks.length; i++) {
     let type = sputniks[i].type
-
-    if (type === 'Научный') {
-        let partsOfCountry = sputniks[i].country.split('/')
-        for (let j = 0; j < partsOfCountry.length; j++) {
-            let coun = partsOfCountry
-            if (!countries.includes(coun[j]))
-            countries.push(coun[j])
-        }
+    if (type.toLocaleLowerCase().includes("науч")) {
+        scintificCount++
+        collectUniqueItems(sputniks[i].country, "/", countries)
     }
 }
 
+function collectUniqueItems(elemAsString, splitter, array) {
+    let parts = elemAsString.split(splitter)
+    for (let i = 0; i < parts.length; i++) {
+        if (!array.includes(parts[i])) {
+            array.push(parts[i])
+        }
+    }
+}
 console.log(countries)
+console.log(scintificCount)
+
+//подсчитать количество спутников, запущенных в 20 и 21 веке
+//и вывести эти значение в консоль
+
+let XX = 0;
+let XXI = 0;
+for (let i = 0; i < sputniks.length; i++) {
+    let year = Number(sputniks[i].launch_date.split('-')[0])
+    //шаг 3. найти спутники в промежутке
+    if (year >= 1900 && year <= 1999) {
+        XX++
+    }
+    else {
+        XXI++
+    }
+}
+console.log(XX)
+console.log(XXI)
+
+//метода дл массивов
+//sputniks.forEach() - обход массива
+//sputniks.filter() - фильтрация массива (возвращает новый массив)
+//sputniks.find() - поиск элемета, удовлетворяющего условиям
+//sputniks.map - преобразование элементов массива
+
+let numbers = [143, 30, 45, -1 / 12, 2, 125 / 18, 96, 9, Math.sqrt(2)]
+console.log(numbers)
+
+numbers.forEach((el, i, arr) => arr[i] += 100)
+let newNumbers = numbers.filter(x => x < 107)
+console.log(newNumbers)
+
+let el_102 = numbers.find(x => x === 102)
+console.log(el_102)
+
+let newNewNumbers = numbers.map(x => x * 0)
+console.log(newNewNumbers)
